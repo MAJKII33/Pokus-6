@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medtrum-Nightscout Sync Monitor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="container-fluid">
+                        <span class="navbar-brand mb-0 h1">
+                            <i class="fas fa-heartbeat me-2"></i>
+                            Medtrum-Nightscout Sync Monitor
+                        </span>
+                        <div class="navbar-text">
+                            <span id="status-indicator" class="badge bg-secondary">
+                                <i class="fas fa-circle"></i> Connecting...
+                            </span>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="row">
+                    <!-- Status Cards -->
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-sync-alt fa-2x text-primary mb-2"></i>
+                                <h5 class="card-title">Sync Status</h5>
+                                <p class="card-text" id="sync-status">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clock fa-2x text-info mb-2"></i>
+                                <h5 class="card-title">Last Sync</h5>
+                                <p class="card-text" id="last-sync">Never</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-line fa-2x text-success mb-2"></i>
+                                <h5 class="card-title">Total Syncs</h5>
+                                <p class="card-text" id="total-syncs">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-database fa-2x text-warning mb-2"></i>
+                                <h5 class="card-title">Last Data Count</h5>
+                                <p class="card-text" id="data-count">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-tachometer-alt me-2"></i>Latest Glucose Data</h5>
+                        <button class="btn btn-primary btn-sm" id="sync-now-btn" onclick="triggerSync()">
+                            <i class="fas fa-sync-alt me-1"></i>Sync Now
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="glucose-data">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                                <p>Loading glucose data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Error Log</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="error-log">
+                            <p class="text-muted">No errors</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog me-2"></i>Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted">
+                            <div class="mb-2">
+                                <strong>Medtrum:</strong> 
+                                <span id="medtrum-config" class="badge bg-secondary">Checking...</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Nightscout:</strong> 
+                                <span id="nightscout-config" class="badge bg-secondary">Checking...</span>
+                            </div>
+                            <div>
+                                <strong>Auto-refresh:</strong> 
+                                <span class="badge bg-info">30s</span>
+                            </div>
+                        </small>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-browser me-2"></i>Browser Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="browser-status">
+                            <p class="text-muted">Checking browser compatibility...</p>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="checkBrowserCompatibility()">
+                            <i class="fas fa-check-circle me-1"></i>Check Compatibility
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toast-container"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
